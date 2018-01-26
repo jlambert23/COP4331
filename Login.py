@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-json_string = '{"user": "cop4331", "password": ""}'
+json_string = '{"user": "db-sys", "password": ""}'
 
 # Parse json
 import json
@@ -11,23 +11,16 @@ import pymysql
 
 conn = pymysql.connect(
     host='localhost',
-    db='example',
+    db='jayTest',
     user=parsed_json['user'],
-    password=parsed_json['password'],
-    defer_connect=True
+    password=parsed_json['password']
 )
+cursor = conn.cursor()
 
-try:
-    conn.begin()
+# Get some data.
+sql = "SELECT `id`, `user`, `passwd` FROM users;"
+cursor.execute(sql)
+result = cursor.fetchall()
+print (result)
 
-    with conn.cursor() as cursor:
-        #
-        sql = "SELECT `id`, `user`, `passwd` FROM users"
-        cursor.execute(sql)
-        result = cursor.fetchone()
-        print (result)
-
-except:
-    print ("Error!")
-finally:
-    conn.close()
+conn.close()
