@@ -1,0 +1,67 @@
+
+function test() {
+    var userName = document.getElementById("userNameText").value;
+    var password = document.getElementById("passwordText").value;
+    console.log("password: " + password);
+
+    // Break after alert.
+    if (userName === "")
+        alert("Please insert username");
+    else if (password === "")
+        alert("Please insert password");
+
+
+    if (password !== "") {
+        var hashValue = hashPassword(password);
+        console.log("hashed password: " + hashValue);
+    } else {
+        console.log("empty password");
+    }
+
+    hideOrShow("successBox", true);
+
+    var jsonPayload = '{"userName" : "' + userName + '", "password" : "' + password + '"}';
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "http://18.219.16.244/comm.py", true);
+    xhr.setRequestHeader("Content-type", "text/html");
+
+    try {
+        xhr.send("send");
+	console.log(xhr.responseText);
+	// var jsonObject = JSON.parse(xhr.responseText);
+        // console.log("Object: " + jsonObject);    
+    } 
+    
+    catch (err) {
+        console.log("Error: JSON/XML")
+    }
+}
+
+// Forge a set of cryptography tools in javascript for webapps and such.
+// https://github.com/digitalbazaar/forge#sha256
+function hashPassword(password) {
+    var hash = forge.md.sha256.create();
+
+    // Stores user password inside hash.
+    hash.update(password);
+
+    // Update password to hashed hex.
+    password = hash.digest().toHex();
+
+    return password;
+
+}
+
+function hideOrShow(elementId, showState) {
+    var vis = "visible";
+    var dis = "block";
+    if (!showState) {
+        vis = "hidden";
+        dis = "none";
+    }
+    console.log("gabba" + vis + dis);
+    document.getElementById(elementId).style.visibility = vis;
+    document.getElementById(elementId).style.display = dis;
+}
+
