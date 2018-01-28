@@ -25,8 +25,12 @@
             margin-left: 25%;
             margin-right: 25%;
         }
+
+	#header {
+		padding-bottom: 2%;
+	}
     </style>
-    <title>Contact Manager</title>
+    <title>Contact Manager<3</title>
 </head>
 
 <body>
@@ -34,7 +38,7 @@
         <div id="header">
             <h1><a "" data-toggle="tooltip" title=" Cool contact manager"> Contact Manager </a></h1>
         </div>
-        <form>
+        <form id="loginForm">
             <div class="form-group">
                 <!-- <div class="container-fluid"> -->
                 <div id="userBox"> username:
@@ -46,13 +50,19 @@
                 <button type="button" class="btn btn-outline-primary" onclick="test();">Login</button>
             </div>
 
-            <div class="alert alert-success alert-dismissible fade show" role="alert" style="display:none; visibility:hidden;" id="successBox">
+            <div class="alert alert-success" role="alert" style="display:none; visibility:hidden;" id="successBox">
                 <strong>Success!</strong>
                 <p id="successL"> </p>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+	    <div class="alert alert-danger" role="alert" style="display:none; visibility:hidden;" id="warningBox">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+</div>
         </form>
 <div id="contacts_container">
 <h3> Contacts </h3>
