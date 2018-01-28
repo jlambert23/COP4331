@@ -9,8 +9,8 @@ def addcontact(name, phone, email):
         conn = pymysql.connect(
             host='localhost',
             db='COP4331',
-            user='user',
-            password='password'
+            user='db-sys',
+            password=''
         )
         cursor = conn.cursor()
 
