@@ -1,0 +1,66 @@
+Login function
+	populate users table
+
+Add function
+	send/recieve json response
+	update users table
+Delete function
+	send/recieve json response
+	update users table
+
+Search function
+
+Register User Function
+	query create user
+
+
+
+Front End
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[["Cole", "Sil", "407555555", "cole@gmail.com", 2], ["James", "Joyce", "5553456789", "jimmy@dublin.com", 2], ["Scott", "Fitzgerald", "5553456789", "ScottyBoy@gmail.com", 1], ["The", "Rock", "5553425678", "peoplesElbow@gmail.com", 1]]
+
+
+
+
+
+
+
+
+
+
+
+	var body = document.getElementsByTagName("body")[0];
+	document.createElement("tr");
+  
+  var tBody = $('#tableRows');
+  var tRow = $('</td>').appendTo(tBody);
+  
+  for (int i = 0; i < 7; i++)
+  {
+  	tRow.append('<td>'+'gabe'+'</td>');
+  }
