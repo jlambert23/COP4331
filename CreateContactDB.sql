@@ -40,7 +40,7 @@ ON UPDATE CASCADE
 ON DELETE CASCADE;
 
 INSERT INTO user (userName,password) VALUES ('user','password');
-GRANT ALL PRIVILEGES ON `contactDB`.* TO 'user'@'localhost';
+
 
 INSERT INTO user (userName, password) VALUES ('gabe', '9ed1515819dec61fd361d5fdabb57f41ecce1a5fe1fe263b98c0d6943b9b232e');
 
