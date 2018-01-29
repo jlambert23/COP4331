@@ -39,5 +39,13 @@ FOREIGN KEY (userID) REFERENCES user(id)
 ON UPDATE CASCADE
 ON DELETE CASCADE;
 
-INSERT INTO users (userName,password) VALUES ('user','password');
+INSERT INTO user (userName,password) VALUES ('user','password');
 GRANT ALL PRIVILEGES ON `contactDB`.* TO 'user'@'localhost';
+
+INSERT INTO user (userName, password) VALUES ('gabe', '9ed1515819dec61fd361d5fdabb57f41ecce1a5fe1fe263b98c0d6943b9b232e');
+
+ INSERT INTO contact VALUES ('Cole','Sil','407555555','cole@gmail.com',2);
+ INSERT INTO contact VALUES ('James', 'Joyce', '5553456789','jimmy@dublin.com',2);
+ INSERT INTO contact VALUES ('Scott', 'Fitzgerald', '5553456789', 'ScottyBoy@gmail.com', 2);
+ INSERT INTO contact VALUES ('The', 'Rock', '5553425678', 'peoplesElbow@gmail.com', 2);
+ INSERT INTO contact VALUES ('Cole', 'Silvernail', '5555555555', 'cole@gmail.com', 1);
