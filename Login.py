@@ -17,11 +17,16 @@ conn = pymysql.connect(
 )
 cursor = conn.cursor()
 
+psd = '"9ed1515819dec61fd361d5fdabb57f41ecce1a5fe1fe263b98c0d6943b9b232e"'
 # Get some data.
 #sql = "SELECT `id`, `user`, `passwd` FROM users"
-sql = "SELECT id FROM users WHERE passwd='9ed1515819dec61fd361d5fdabb57f41ecce1a5fe1fe263b98c0d6943b9b232e'"
-cursor.execute(sql)
+#sql = "SELECT id FROM users" + "WHERE passwd= " + psd
+
+cursor.execute("SELECT id FROM users WHERE passwd=" + psd)
 result = cursor.fetchone()
-print (result)
+for result in result:
+            print(result)
+            #print ("_")
+            #result = cursor.fetchone()
 
 conn.close()
