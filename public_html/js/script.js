@@ -33,17 +33,27 @@ function test() {
 
             try {
                 var jsonObject = JSON.parse(xhr.responseText);
-                console.log(jsonObject.id);
+		userId = jsonObject.id;
+		userId = userId[0];
                 console.log("We're in the try block");
+		console.log(userId);
+		
+		if (userId < 1){
+			alert("User doesn't exist");
+			return;
+		}
+
+		hideOrShow("loginForm", false);
             }
             catch (err) {
                 console.log(err + "ERROR XML/JSON");
+		return;
             }
 		}
 	}
 
     xhr.send(jsonPayload);
-    hideOrShow("loginForm", false); 
+    //hideOrShow("loginForm", false);
 }
 
 // Forge a set of cryptography tools in javascript for webapps and such.
@@ -71,4 +81,16 @@ function hideOrShow(elementId, showState) {
     console.log("gabba" + vis + dis);
     document.getElementById(elementId).style.visibility = vis;
     document.getElementById(elementId).style.display = dis;
+}
+
+function addBtn(){
+	console.log("add");
+}
+
+function searchBtn(){
+	console.log("search"); 
+}
+
+function deleteBtn(){
+	console.log("delete");
 }
