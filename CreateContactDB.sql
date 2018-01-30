@@ -45,4 +45,5 @@ INSERT INTO user (username, password) VALUES ('cole','7842275f98964d3914268cc7b6
  INSERT INTO contact VALUES ('Scott', 'Fitzgerald', '5553456789', 'ScottyBoy@gmail.com', 2);
  INSERT INTO contact VALUES ('The', 'Rock', '5553425678', 'peoplesElbow@gmail.com', 3);
  INSERT INTO contact VALUES ('Cole', 'Silvernail', '5555555555', 'cole@gmail.com', 1);
- INSERT INTO contact VALUES ('Lebron', 'James', '3215555555','lbj@lemail.com',3); 
+ INSERT INTO contact VALUES ('Lebron', 'James', '3215555555','lbj@lemail.com',3);
+ INSERT INTO contact VALUES ('Crocodile','Dundee','5558494756','isthataknife@CrocLuvr.com',2);
