@@ -1,41 +1,59 @@
+var url = window.location.href; //"http://18.219.16.244";
+var ext = ".py"
+var userId = 0;
 
 function test() {
+
     var userName = document.getElementById("userNameText").value;
     var password = document.getElementById("passwordText").value;
-    console.log("password: " + password);
 
-    // Break after alert.
-    if (userName === "")
-        alert("Please insert username");
-    else if (password === "")
-        alert("Please insert password");
-
-
-    if (password !== "") {
-        var hashValue = hashPassword(password);
-        console.log("hashed password: " + hashValue);
-    } else {
-        console.log("empty password");
+    if (userName === "") {
+        //alert("Please insert username");
+	      hideOrShow("warningBox", true);
+        //return;
+    }
+    else if (password === "") {
+       // alert("Please insert password");
+	      hideOrShow("warningBox", true);
+        //return;
     }
 
     hideOrShow("successBox", true);
 
-    var jsonPayload = '{"userName" : "' + userName + '", "password" : "' + password + '"}';
-
+    var jsonPayload = '{"username" : "' + userName + '", "password" : "' + hashPassword(password) + '"}';
+    console.log(hashPassword(password)); /* this is a debug */
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "http://18.219.16.244/comm.py", true);
-    xhr.setRequestHeader("Content-type", "text/html");
+    xhr.open("POST", url + "/API/Login" + ext);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
 
-    try {
-        xhr.send("send");
-	console.log(xhr.responseText);
-	// var jsonObject = JSON.parse(xhr.responseText);
-        // console.log("Object: " + jsonObject);    
-    } 
-    
-    catch (err) {
-        console.log("Error: JSON/XML")
-    }
+    // Event handler to asynchronously retrieve response.
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState == 4 && xhr.status == 200) {
+            console.log(xhr.responseText);
+
+            try {
+                var jsonObject = JSON.parse(xhr.responseText);
+		userId = jsonObject.id;
+		userId = userId[0];
+                console.log("We're in the try block");
+		console.log(userId);
+		
+		if (userId < 1){
+			alert("User doesn't exist");
+			return;
+		}
+
+		hideOrShow("loginForm", false);
+            }
+            catch (err) {
+                console.log(err + "ERROR XML/JSON");
+		return;
+            }
+		}
+	}
+
+    xhr.send(jsonPayload);
+    //hideOrShow("loginForm", false);
 }
 
 // Forge a set of cryptography tools in javascript for webapps and such.
@@ -65,3 +83,14 @@ function hideOrShow(elementId, showState) {
     document.getElementById(elementId).style.display = dis;
 }
 
+function addBtn(){
+	console.log("add");
+}
+
+function searchBtn(){
+	console.log("search"); 
+}
+
+function deleteBtn(){
+	console.log("delete");
+}

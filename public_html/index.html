@@ -30,7 +30,7 @@
 		padding-bottom: 2%;
 	}
     </style>
-    <title>Contact Manager<3</title>
+    <title>Contact Manager: Group 16<3</title>
 </head>
 
 <body>
@@ -47,7 +47,7 @@
                 <div id="passBox"> password:
                     <input id="passwordText" type="password" placeholder="password" /> </div>
                 <br/>
-                <button type="button" class="btn btn-outline-primary" onclick="test();">Login</button>
+                <button type="button" class="btn btn-outline-primary" onclick="login();">Login</button>
             </div>
 
             <div class="alert alert-success" role="alert" style="display:none; visibility:hidden;" id="successBox">
@@ -67,7 +67,7 @@
 <div id="contacts_container">
 <h3> Contacts </h3>
  <input type="text" id="myInput" onkeyup="tablesearch();" placeholder="Search for names..">
- <table class="table table-striped" id="myTable">
+ <!-- <table class="table table-striped" id="myTable">
     <thead>
         <tr class="header">
             <th>Firstname</th>
@@ -108,22 +108,23 @@
             <td>123-456-7890</td>
         </tr>
     </tbody>
-</table>
+</table> -->
 </div>
-<div id="CRUDcontrols">
-<div class="btn-group btn-group-toggle" data-toggle="buttons">
-  <label class="btn btn-secondary active onclick=">
-    <input type="radio" name="options" id="option1" autocomplete="off" checked> Search
-  </label>
-  <label class="btn btn-secondary" onclick="addBtn();">
-    <input type="radio" name="options" id="option2" autocomplete="off"> Add
-  </label>
-  <label class="btn btn-secondary">
-    <input type="radio" name="options" id="option3" autocomplete="off"> Delete
-  </label>
+        <p id="view"></p>
+<div id="queryForm">
+    <h6> Search </h6>
+    <form id="searchForm" style="margin-left:5%;">
+        <input type="text" id="searchBox"/> <button type="button" class="btn btn-primary">Search</button>
+    </form>
+    <h6> Add </h6>
+        <form id="AddForm" style="margin-left:5%;">
+            <label style="margin-left:auto;">Name:</label>  <input type="text" id="nameBox"><br/>
+            <label style="margin-left:auto;">Phone: <input type="tel" placeholder="1-(555)-555-5555" id="phoneBox"/></label> <br/>
+            <label>Email: <input type="email" placeholder="yourawesome@goyou.com" size="25"</label>
+        </form>
+    <h6> Delete</h6>
 </div>
-  <input type="text" placeholder="CRUD" id="crud_text">
-</div>
+
     </div>
 </body>
 <!-- This script is for search -->

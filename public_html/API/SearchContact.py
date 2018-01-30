@@ -6,8 +6,8 @@ def searchcontact(json):
 
     try:
         name = json['name']
-        #phone = json['phone']
-        #email = json['email']
+        phone = json['phone']
+        email = json['email']
         user_id = json['userID']
 
         # Import connection settings.
@@ -16,7 +16,7 @@ def searchcontact(json):
         cursor = conn.cursor()
 
         # Check if contact already exists.
-        sql = "SELECT * FROM contact WHERE name='%s' AND userID=%d" % (name, user_id)
+        sql = "SELECT * FROM contact WHERE name='%s' AND phone='%s' AND email='%s' AND userID=%d" % (name,phone,email,user_id)
         cursor.execute(sql)
         result = cursor.fetchone()
         conn.close()
