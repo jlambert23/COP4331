@@ -18,13 +18,9 @@ USE `contactDB`;
 CREATE USER IF NOT EXISTS 'db-sys'@'localhost';
 GRANT ALL PRIVILEGES ON `contactDB`.* TO `db-sys`@`localhost`;
 
-
 CREATE TABLE user (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
-userName VARCHAR(30),
+userName VARCHAR(30) UNIQUE,
 password VARCHAR(64));
-
-
-
 
 CREATE TABLE contact ( firstname VARCHAR(30),
 lastname VARCHAR(30),
@@ -32,16 +28,15 @@ phone VARCHAR(30),
 email VARCHAR(30),
 userID INT);
 
-
+# Modify userID to have foreign key.
 ALTER TABLE contact
 ADD CONSTRAINT FK_contact
 FOREIGN KEY (userID) REFERENCES user(id)
 ON UPDATE CASCADE
 ON DELETE CASCADE;
 
+# Insert base users and data
 INSERT INTO user (userName,password) VALUES ('user','password');
-
-
 INSERT INTO user (userName, password) VALUES ('gabe', '9ed1515819dec61fd361d5fdabb57f41ecce1a5fe1fe263b98c0d6943b9b232e');
 
  INSERT INTO contact VALUES ('Cole','Sil','407555555','cole@gmail.com',2);
