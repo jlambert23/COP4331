@@ -39,6 +39,7 @@ def newuser(jsonPayload):
             conn.commit()
         except:
             util.throwErr("User name already in use.")
+            return
     
         # Retrieve user information.
         sql2 = "SELECT * FROM user WHERE username='%s' AND password='%s';" % (username, password)
@@ -59,4 +60,4 @@ try:
     parsed_json = util.getjson()
     newuser(parsed_json)
 except:
-    util.throwErr("Failed to parse json.")
+    util.throwErr("Failed to add new user.")

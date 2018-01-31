@@ -94,14 +94,10 @@
             if (ret == true) {
                 alert("New account created. Please login.");
                 window.location.href="index.html";
-            } else {
-                alert("Incorrect login information. Please verify.");
             }
-            
         } else {
             return;
         }
-        
     })
     
     function signup(){
@@ -123,18 +119,17 @@
 		try {
 			xhr.send(jsonPayload);
 			var jsonReceive = JSON.parse( xhr.responseText );
-		   
+            
 			// Error checking.
 			if ( jsonReceive.hasOwnProperty('error') ) {
-				// MessageBox?
-				console.log(jsonReceive);
+				alert(jsonReceive.error);
+                return false;
 			}
 			user = jsonReceive[0];
 		}
 		catch(err) {
-			// MessageBox?
+            alert("Incorrect login information. Please verify.");
 			console.log(err);
-            return false;
 		}
         
         return true;

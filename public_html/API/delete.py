@@ -52,4 +52,4 @@ try:
     parsed_json = util.getjson()
     delete(parsed_json)
 except:
-    util.throwErr("Failed to parse json.")
+    util.throwErr("Failed to delete contact.")

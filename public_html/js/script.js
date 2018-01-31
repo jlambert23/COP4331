@@ -5,7 +5,7 @@ var user;
 function login(username, password) {
     
     if (username === "" || password === "") {
-        hideOrShow("warningBox", true);
+        alert("Username and password cannot be empty.");
         return;
     }
 		
@@ -26,8 +26,7 @@ function login(username, password) {
        
         // Error checking.
         if ( jsonReceive.hasOwnProperty('error') ) {
-            hideOrShow("warningBox", true);
-            return;
+            throw new Exception();
         }
         user = jsonReceive[0];
 		
@@ -35,7 +34,7 @@ function login(username, password) {
         presentTable(jsonReceive);
     }
     catch(err) {
-        // Need some sort of popup window here.
+        alert("Unable to login. Please check your credentials.");
         console.log(err);
     }
 }
@@ -73,25 +72,27 @@ function addBtn(){
     var phone = document.getElementById("phoneBox").value;
         
     var jsonPayload = '{"userid" : '+ user[3] +', "firstname" : "' + firstname + '", "lastname" : "' + lastname + '", "email" : "' + email + '", "phone" : "' + phone + '"}';
-    console.log(jsonPayload);
+    
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", url + "API/add" + ext, false);
+    xhr.open("POST", "API/add" + ext, false);
     xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
 
 	try {
         xhr.send(jsonPayload);
         var jsonReceive = JSON.parse( xhr.responseText );
         console.log(jsonReceive);
+        
+        console.log(jsonReceive.hasOwnProperty('error'));
+        
         // Error checking.
         if ( jsonReceive.hasOwnProperty('error') ) {
-            hideOrShow("warningBox", true);
-            return;
+            throw new Exception();
         }
         
         presentTable(jsonReceive);
     }
     catch(err) {
-        // Need some sort of popup window here.
+        alert("Unable to add contact.");
         console.log(err);
     }
 }

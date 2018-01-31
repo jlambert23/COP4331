@@ -52,5 +52,5 @@ try:
     parsed_json = util.getjson()
     add(parsed_json)
 except:
-    util.throwErr("Failed to parse json.")
+    util.throwErr("Failed to add new contact.")
     

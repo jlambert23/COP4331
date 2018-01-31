@@ -57,4 +57,4 @@ try:
     parsed_json = util.getjson()
     login(parsed_json)
 except:
-    util.throwErr("Failed to parse json.")
+    util.throwErr("Failed to login.")
