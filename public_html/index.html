@@ -36,9 +36,9 @@
 <body>
     <div id="wrapper">
         <div id="header">
-            <h1><a "" data-toggle="tooltip" title=" Cool contact manager"> Contact Manager </a></h1>
+            <h1 href=""><a href="http://cop4331-group16.com/" "" data-toggle="tooltip" title=" Cool contact manager" style="text-decoration: none;"> 🍕 Contact Manager 💖 </a></h1>
         </div>
-        <form id="loginForm">
+        <form id="loginForm" style="display:block; visibility:visible;">
             <div class="form-group">
                 <!-- <div class="container-fluid"> -->
                 <div id="userBox"> username:
@@ -48,6 +48,8 @@
                     <input id="passwordText" type="password" placeholder="password" /> </div>
                 <br/>
                 <button type="button" class="btn btn-outline-primary" onclick="login();">Login</button>
+                <a href="signup.html"> <button type="button" class="btn btn-outline-success" style="margin-left:5%;">Sign up</button> </a>
+
             </div>
 
             <div class="alert alert-success" role="alert" style="display:none; visibility:hidden;" id="successBox">
@@ -61,17 +63,14 @@
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
-  <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+  <strong>Login Error!</strong> One or more fields are probably empty.
 </div>
         </form>
 <div id="contacts_container">
-<h3> Contacts </h3>
- <input type="text" id="myInput" onkeyup="tablesearch();" placeholder="Search for names..">
-<<<<<<< HEAD
+<!-- <h3> Contacts </h3>
+ <input type="text" id="myInput" onkeyup="tablesearch();" placeholder="Search for names.."> -->
  <!-- <table class="table table-striped" id="myTable">
-=======
  <table class="table table-dark" id="myTable">
->>>>>>> 00f3267b427186eac1a30c38121207e8755af328
     <thead>
         <tr class="header">
             <th>Firstname</th>
@@ -114,19 +113,22 @@
     </tbody>
 </table> -->
 </div>
-        <p id="view"></p>
-<div id="queryForm">
-    <h6> Search </h6>
-    <form id="searchForm" style="margin-left:5%;">
-        <input type="text" id="searchBox"/> <button type="button" class="btn btn-primary">Search</button>
-    </form>
+        <!-- <p id="view"></p> -->
+<div id="queryForm" style="display:none; visibility:hidden;">
+    <h3> Contacts </h3>
+    <p id="view"></p>
+
+    <br/><div style="border-bottom: 1px solid #ccc;"></div> <br/>
+    <h6>Search:</h6> <input type="text" id="myInput" onkeyup="tablesearch();" placeholder="Search for names.."> <br /> <br />
     <h6> Add </h6>
-        <form id="AddForm" style="margin-left:5%;">
-            <label style="margin-left:auto;">Name:</label>  <input type="text" id="nameBox"><br/>
-            <label style="margin-left:auto;">Phone: <input type="tel" placeholder="1-(555)-555-5555" id="phoneBox"/></label> <br/>
-            <label>Email: <input type="email" placeholder="yourawesome@goyou.com" size="25"</label>
+        <form id="AddForm" class="form-group" style="margin-left:5%;">
+            <label style="margin-left:auto;">First Name:</label>  <input class="form-control" type="text" id="firstNameBox"><br/>
+            <label style="margin-left:auto;">Last Name:</label>  <input class="form-control" type="text" id="lastNameBox"><br/>
+            <label style="margin-left:auto;">Email:</label> <input class="form-control" type="email" id="emailBox" placeholder="youreawesome@goyou.com"><br/>
+            <label style="margin-left:auto;">Phone: <input class="form-control" type="tel" placeholder="1-(555)-555-5555" id="phoneBox"/></label> <br/>
+            <br/>
+            <button type="button" class="btn btn-primary" onclick="addBtn();">Add</button>
         </form>
-    <h6> Delete</h6>
 </div>
 
     </div>
@@ -153,5 +155,38 @@ function tablesearch() {
     }
   }
 }
+</script>
+<script type= "text/javascript" src="js/script.js"></script>
+<script type="text/javascript">
+    $(document).on('click', '#rowBtn', function(){
+        var prepJson = [];
+        var row = $(this).closest("tr");
+        var td = row.find("td");
+        $.each(td, function() {
+        console.log($(this).text());
+        prepJson.push($(this).text());
+    });
+    $(this).parents('tr').remove();
+
+        console.log("Print array: " + prepJson);
+
+     var jsonPayload = '{"userid" :'+ userid +', "firstname" : "' + prepJson[0] + '", "lastname" : "' + prepJson[1] + '", "email" : "' + prepJson[2] + '", "phone" : "' + prepJson[3] + '"}';
+    console.log(jsonPayload);
+    //console.log(userid);
+		//console.log(typeof userid);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", url + "API/delete" + ext, false);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+	try {
+        xhr.send(jsonPayload);
+        var jsonReceive = JSON.parse( xhr.responseText );
+    }
+    catch(err) {
+        console.log(err);
+    }
+})
+    //$(".alert").alert()
 </script>
 </html>

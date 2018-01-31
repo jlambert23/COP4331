@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+
+<head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <!-- Forge (cryptography library) -->
+    <script src="https://cdn.jsdelivr.net/npm/node-forge@0.7.0/dist/forge.min.js"></script>
+    <script src="js/script.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+
+    <!-- imbedded style -->
+    <style>
+        #wrapper {
+            margin-left: 25%;
+            margin-right: 25%;
+        }
+
+        #header {
+            padding-bottom: 2%;
+        }
+    </style>
+    <title>🐝Contact Manager: Group 16
+        🐝</title>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="header">
+            <h1><a "" data-toggle="tooltip" title=" Cool contact manager"> Contact Manager 📝 </a></h1>
+            <h2> Sign up</h2>
+        </div>
+        <form id="loginForm" style="display:block; visibility:visible;">
+            <div class="form-group">
+                <!-- <div class="container-fluid"> -->
+                <div id="userBox"> Username:
+                    <input id="userNameText" type="text" placeholder="Your username" />
+                </div>
+                <br/>
+                <div id="firstName"> First Name:
+                    <input id="firstNameBox" type="text" placeholder="First Name" />
+                </div>
+                <br />
+                <div id="lastName"> Last Name:
+                    <input id="lastNameBox" type="text" placeholder="Last Name" />
+                </div>
+                <br />
+                <div id="signUpEmail"> Email:
+                    <input id="signUpEmail" type="email" placeholder="Your email" style="margin-left: 4%;" />
+                </div>
+                <br />
+                <div id="passBox"> Password:
+                    <input id="passwordText" type="password" placeholder="Create a password" /> </div>
+                <br/>
+                <a href="#"> <button id="submitButton" type="button" class="btn btn-outline-success">Submit</button> </a>
+
+            </div>
+
+            <div class="alert alert-success" role="alert" style="display:none; visibility:hidden;" id="successBox">
+                <strong>Success!</strong>
+                <p id="successL"> </p>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="alert alert-danger" role="alert" style="display:none; visibility:hidden;" id="warningBox">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+            </div>
+        </form>
+    </div>
+</body>
+<script type="text/javascript">
+    $(document).on('click', '#submitButton', function(){
+        console.log("load submit");
+    })
+</script>
+</html>

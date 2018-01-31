@@ -1,5 +1,6 @@
 var url = window.location.href; //"http://18.219.16.244";
 var ext = ".py"
+var userid;
 
 function login() {
     var userName = document.getElementById("userNameText").value;
@@ -12,84 +13,30 @@ function login() {
     
     // Send json to backend API.
     var jsonPayload = '{"username" : "' + userName + '", "password" : "' + hashPassword(password) + '"}';   
-    // var jsonReceive = sendJSON(jsonPayload, url + "API/login" + ext);
-
-
-    /*---------------------------------------------------------------------------*/
-    /*                          The worst code ever...                           */
-    /*---------------------------------------------------------------------------*/
     
-    // Configure AJAX
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", url + "API/login" + ext);
+    xhr.open("POST", url + "API/login" + ext, false);
     xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
 
-    // Event handler to asynchronously retrieve response.
-	xhr.onreadystatechange = function() {
-		if (xhr.readyState == 4 && xhr.status == 200) {
-            console.log(xhr.responseText);
-
-            try {
-                var jsonReceive = JSON.parse(xhr.responseText);
-            }
-            catch (err) {
-                console.log(err);
-                hideOrShow("warningBox", true);
-            }
-            
-            if (!jsonReceive.hasOwnProperty('id')) {
-                hideOrShow("warningBox", true);
-                return;
-            }
-                
-            
-            hideOrShow("loginForm", false);
-            
-		}
-	}
-
-    xhr.send(jsonPayload);
-}    
-    /*
-
-    console.log(jsonReceive);
-    
-    // if (jsonReceive.hasOwnProperty('id')) {
-		// hideOrShow("warningBox", true);
-        // return;
-	// }
-
-	currentuserid = jsonReceive.id;
-    jsonPayload ='{"currentuserid" : "2"}'
-    jsonReceive = sendJSON(jsonPayload, url + "API/QueryContacts" + ext);
-
-    presentTable();
-    hideOrShow("loginForm", false);
-    */
-
-
-function sendJSON(jsonPayload, pyScript) {
-    // Configure AJAX
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", pyScript, false);
-    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-
-    // Event handler to asynchronously retrieve response.
-	xhr.onreadystatechange = function() {
-		if (xhr.readyState == 4 && xhr.status == 200) {
-            console.log(JSON.parse(xhr.responseText));
-
-            try {
-                return JSON.parse(xhr.responseText);
-            }
-            catch (err) {
-                console.log(err + "ERROR XML/JSON");
-                return null;
-            }
-		}
-	}
-
-    xhr.send(jsonPayload);
+	try {
+        xhr.send(jsonPayload);
+        var jsonReceive = JSON.parse( xhr.responseText );
+       
+        // Error checking.
+        if ( jsonReceive.hasOwnProperty('error') ) {
+            hideOrShow("warningBox", true);
+            return;
+        }
+        
+        userid = jsonReceive[0];
+        console.log(userid)
+        hideOrShow("loginForm", false);
+        presentTable(jsonReceive);
+    }
+    catch(err) {
+        // Need some sort of popup window here.
+        console.log(err);
+    }
 }
 
 // Forge a set of cryptography tools in javascript for webapps and such.
@@ -120,55 +67,44 @@ function hideOrShow(elementId, showState) {
 }
 
 function addBtn(){
-	var firstName = document.getElementById("firstNameBox").value;
-    var lastName = document.getElementById("lastNameBox").value;
+	var firstname = document.getElementById("firstNameBox").value;
+    var lastname = document.getElementById("lastNameBox").value;
     var email = document.getElementById("emailBox").value;
-    var phoneNum = document.getElementById("phoneBox").value;
+    var phone = document.getElementById("phoneBox").value;
+        
+    var jsonPayload = '{"userid" :'+ userid +', "firstname" : "' + firstname + '", "lastname" : "' + lastname + '", "email" : "' + email + '", "phone" : "' + phone + '"}';
     
-    console.log(firstName); console.log(lastName); console.log(email); console.log(phoneNum);
-    
-    var jsonPayload = '{"firstName" : "' + firstName + '", "LastName" : "' + lastName + '", "email" : "' + email + '", "phone" : "' + phoneNum + '"}';
-    var jsonRecieve = "";
-    
-    bogus_Json = [{"currentuserid": 2, "phone": "111111", "email": "asdf@gmail.com", "lastname": "Sil", "firstname": "Cole"}, {"currentuserid": 2, "phone": "222222", "email": "zxcv@dublin.com", "lastname": "Joyce", "firstname": "James"}, {"currentuserid": 1, "phone": "333333333", "email": "qwer@gmail.com", "lastname": "Fitzgerald", "firstname": "Scott"}, {"currentuserid": 1, "phone": "44444444", "email": "fghj@gmail.com", "lastname": "Rock", "firstname": "The"}];
-    
-    presentTable(bogus_Json);
-    
-    
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", url + "API/add" + ext, false);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+	try {
+        xhr.send(jsonPayload);
+        var jsonReceive = JSON.parse( xhr.responseText );
+       
+        // Error checking.
+        if ( jsonReceive.hasOwnProperty('error') ) {
+            hideOrShow("warningBox", true);
+            return;
+        }
+        
+        presentTable(jsonReceive);
+    }
+    catch(err) {
+        // Need some sort of popup window here.
+        console.log(err);
+    }
 }
 
 function searchBtn(){
 	console.log("search"); 
 }
 
-
-    //count = 0; console.log("FIRE AWAY");
-   /* $('.btn-danger').click(function() {
-        var row = $(this).closest("tr");
-        var td = row.find("td");
-        $.each(td, function() {
-        console.log($(this).text());
-    });
-    }) */
-    
-    
-	/*$('#rowBtn').click(function(){
-        var row = $(this).closest("tr");
-        var td = row.find("td");
-        $.each(td, function() {
-        console.log($(this).text());
-    });
-    $(this).parents('tr').remove();
-}) */
-
-
-
-function presentTable()
+function presentTable(jsonObject)
 {
     hideOrShow("queryForm", true);
-    bogus_Json = [{"userid": 2, "phone": "407555555", "email": "cole@gmail.com", "lastname": "Sil", "firstname": "Cole"}, {"currentuserid": 2, "phone": "5553456789", "email": "jimmy@dublin.com", "lastname": "Joyce", "firstname": "James"}, {"currentuserid": 1, "phone": "5553456789", "email": "ScottyBoy@gmail.com", "lastname": "Fitzgerald", "firstname": "Scott"}, {"currentuserid": 1, "phone": "5553425678", "email": "peoplesElbow@gmail.com", "lastname": "Rock", "firstname": "The"}];
     
-    var count = Object.keys(bogus_Json).length;
+    var count = Object.keys(jsonObject).length;
     console.log("Size of json objects " + count);
     
     var txt ="";
@@ -183,15 +119,17 @@ function presentTable()
     txt += "</tr>";
     //txt += "</table>";
     
-    for (i = 0; i < count; i++){ 
+    console.log(jsonObject);
+    
+    for (i = 1; i < count; i++){ 
         txt += "<tr>";
-        txt += "<td>" + bogus_Json[i].firstname + "</td>";
-        txt += "<td>" + bogus_Json[i].lastname + "</td>";
-        txt += "<td>" + bogus_Json[i].email + "</td>";
-        txt += "<td>" + bogus_Json[i].phone + "</td>";
+        txt += "<td>" + jsonObject[i].firstname + "</td>";
+        txt += "<td>" + jsonObject[i].lastname + "</td>";
+        txt += "<td>" + jsonObject[i].email + "</td>";
+        txt += "<td>" + jsonObject[i].phone + "</td>";
         txt += "<td>" + "<button id='rowBtn' style='margin-left:2%;' type='button' class='btn btn-danger'>Delete</button>" + "</td>";
         /*for (i = 0; i < count; i++) {
-            	txt += "<td>" + bogus_Json[i]+ "</td>";
+            	txt += "<td>" + jsonObject[i]+ "</td>";
                 
         } */
         txt += "</tr>"

@@ -6,8 +6,8 @@ json_string = '{"username": "cop4331", "password":"pass"}'
 import sys
 import json
 import pymysql
-#parsed_json = json.loads(json_string)
-parsed_json = json.load(sys.stdin)
+parsed_json = json.loads(json_string)
+#parsed_json = json.load(sys.stdin)
 
 first_name = parsed_json['username']
 password = parsed_json['password']

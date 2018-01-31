@@ -15,8 +15,11 @@ def login(jsonPayload):
     import pymysql
 
     try:
-        user = jsonPayload['username']
-        password = jsonPayload['password']
+        firstname = jsonPayload['firstname']
+        lastname = jsonPayload['lastname']
+        phone = jsonPayload['phone']
+        email = jsonPayload['email']
+        userid = jsonPayload['userid']
     except:
         throwErr("JSON incorrectly configured.\n" + str(jsonPayload))
         return
@@ -31,20 +34,10 @@ def login(jsonPayload):
         return
 
     try:
-        # Throw before accessing database if non-alphanumeric characters are used.
-        import re
-        if not re.match('^[\w-]+$', user) is not None:
-            raise Exception
-        
-        #
-        sql = "SELECT id FROM user WHERE username='%s' AND password='%s';" % (user, password)
+        sql = "DELETE FROM contact WHERE firstname='%s' AND lastname='%s' AND phone='%s' AND email='%s' AND userid=%d;" % (firstname, lastname, phone, email, userid)
         cursor.execute(sql)        
-        userid = cursor.fetchone()[0]
+        conn.commit()
         
-        if not userid:
-            raise Exception
-        
-        # 
         sql2 = "SELECT * FROM `contact` WHERE userid='%d';" % userid
         cursor.execute(sql2)        
         columns = cursor.description
@@ -58,6 +51,6 @@ def login(jsonPayload):
         throwErr(str(e) + "\nIncorrect login information.")
         return
 
-parsed_json = json.loads('{"username":"user", "password":"password"}')
+#parsed_json = json.loads('{"firstname":"Cole", "lastname":"Sil", "phone":"1234567890", "email":"cole@gmail.com", "userid":2}')
 parsed_json = getjson()
 login(parsed_json)

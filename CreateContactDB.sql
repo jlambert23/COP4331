@@ -20,7 +20,10 @@ GRANT ALL PRIVILEGES ON `contactDB`.* TO `db-sys`@`localhost`;
 
 CREATE TABLE user (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 username VARCHAR(30) UNIQUE,
-password VARCHAR(64));
+password VARCHAR(64),
+firstname VARCHAR(30),
+lastname VARCHAR(30),
+email VARCHAR(30));
 
 CREATE TABLE contact ( firstname VARCHAR(30),
 lastname VARCHAR(30),
@@ -36,9 +39,12 @@ ON UPDATE CASCADE
 ON DELETE CASCADE;
 
 # Insert base users and data
-INSERT INTO user (username,password) VALUES ('user','password');
-INSERT INTO user (username, password) VALUES ('gabe', '9ed1515819dec61fd361d5fdabb57f41ecce1a5fe1fe263b98c0d6943b9b232e');
-INSERT INTO user (username, password) VALUES ('cole','7842275f98964d3914268cc7b66e35b8b614663978b64a1e9ecb3c5499427ed9');
+INSERT INTO user (username,password, firstname, lastname, email) VALUES
+('user','password', 'user', 'man', 'user@userman.edu');
+INSERT INTO user (username,password, firstname, lastname, email) VALUES
+('gabe', '9ed1515819dec61fd361d5fdabb57f41ecce1a5fe1fe263b98c0d6943b9b232e', 'Gabriel', 'Lara', 'ilovepizza@dominoes.gov');
+INSERT INTO user (username,password, firstname, lastname, email) VALUES
+('cole','7842275f98964d3914268cc7b66e35b8b614663978b64a1e9ecb3c5499427ed9', 'Cole', 'Silvernail', 'ilovecalzones@broadways.edu');
 
  INSERT INTO contact VALUES ('Cole','Sil','407555555','cole@gmail.com',2);
  INSERT INTO contact VALUES ('James', 'Joyce', '5553456789','jimmy@dublin.com',2);
