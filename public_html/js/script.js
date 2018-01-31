@@ -1,55 +1,27 @@
 var url = window.location.href; //"http://18.219.16.244";
 var ext = ".py"
-var userId = null;
 
 function login() {
     var userName = document.getElementById("userNameText").value;
     var password = document.getElementById("passwordText").value;
 
-    if (userName === "" || password == "") {
+    if (userName === "" || password === "") {
         hideOrShow("warningBox", true);
         return;
     }
-
-    //hideOrShow("successBox", true);
-    // bogus stuff
-    presentTable();
-    // bogus stuff
-
+    
     // Send json to backend API.
-    var jsonPayload = '{"userName" : "' + userName + '", "password" : "' + hashPassword(password) + '"}';
-    var jsonReceive = sendJSON(jsonPayload, url + "API/Login" + ext);
+    var jsonPayload = '{"username" : "' + userName + '", "password" : "' + hashPassword(password) + '"}';   
+    // var jsonReceive = sendJSON(jsonPayload, url + "API/login" + ext);
+
+
+    /*---------------------------------------------------------------------------*/
+    /*                          The worst code ever...                           */
+    /*---------------------------------------------------------------------------*/
     
-    /* presentTable(sendJSON('{"id": "2"}', url + "API/QueryContacts"+ext)); */
-
-    //hideOrShow("loginForm", false);
-    console.log(jsonRecieve);
-    if (jsonReceive.id)
-        console.log("id json id object");
-    else if (jsonRecieve.error)
-        return;
-    
-    userId = jsonReceive.id;
-    userId = userId[0];
-
-    console.log(typeof userId);
-
-    if (userId < 1 || userId === null){
-        alert("User doesn't exist");
-        //hideOrShow("loginForm", true);
-        return;
-    } else {
-        hideOrShow("loginForm", false);
-        hideOrShow("successBox", true);
-    }
-    
-    //presentTable();
-}
-
-function sendJSON(jsonPayload, pyScript) {
     // Configure AJAX
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", pyScript);
+    xhr.open("POST", url + "API/login" + ext);
     xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
 
     // Event handler to asynchronously retrieve response.
@@ -58,11 +30,61 @@ function sendJSON(jsonPayload, pyScript) {
             console.log(xhr.responseText);
 
             try {
+                var jsonReceive = JSON.parse(xhr.responseText);
+            }
+            catch (err) {
+                console.log(err);
+                hideOrShow("warningBox", true);
+            }
+            
+            if (!jsonReceive.hasOwnProperty('id')) {
+                hideOrShow("warningBox", true);
+                return;
+            }
+                
+            
+            hideOrShow("loginForm", false);
+            
+		}
+	}
+
+    xhr.send(jsonPayload);
+}    
+    /*
+
+    console.log(jsonReceive);
+    
+    // if (jsonReceive.hasOwnProperty('id')) {
+		// hideOrShow("warningBox", true);
+        // return;
+	// }
+
+	currentuserid = jsonReceive.id;
+    jsonPayload ='{"currentuserid" : "2"}'
+    jsonReceive = sendJSON(jsonPayload, url + "API/QueryContacts" + ext);
+
+    presentTable();
+    hideOrShow("loginForm", false);
+    */
+
+
+function sendJSON(jsonPayload, pyScript) {
+    // Configure AJAX
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", pyScript, false);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+    // Event handler to asynchronously retrieve response.
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState == 4 && xhr.status == 200) {
+            console.log(JSON.parse(xhr.responseText));
+
+            try {
                 return JSON.parse(xhr.responseText);
             }
             catch (err) {
                 console.log(err + "ERROR XML/JSON");
-                return;
+                return null;
             }
 		}
 	}
@@ -98,21 +120,53 @@ function hideOrShow(elementId, showState) {
 }
 
 function addBtn(){
-	console.log("add");
+	var firstName = document.getElementById("firstNameBox").value;
+    var lastName = document.getElementById("lastNameBox").value;
+    var email = document.getElementById("emailBox").value;
+    var phoneNum = document.getElementById("phoneBox").value;
+    
+    console.log(firstName); console.log(lastName); console.log(email); console.log(phoneNum);
+    
+    var jsonPayload = '{"firstName" : "' + firstName + '", "LastName" : "' + lastName + '", "email" : "' + email + '", "phone" : "' + phoneNum + '"}';
+    var jsonRecieve = "";
+    
+    bogus_Json = [{"currentuserid": 2, "phone": "111111", "email": "asdf@gmail.com", "lastname": "Sil", "firstname": "Cole"}, {"currentuserid": 2, "phone": "222222", "email": "zxcv@dublin.com", "lastname": "Joyce", "firstname": "James"}, {"currentuserid": 1, "phone": "333333333", "email": "qwer@gmail.com", "lastname": "Fitzgerald", "firstname": "Scott"}, {"currentuserid": 1, "phone": "44444444", "email": "fghj@gmail.com", "lastname": "Rock", "firstname": "The"}];
+    
+    presentTable(bogus_Json);
+    
+    
 }
 
 function searchBtn(){
 	console.log("search"); 
 }
 
-function deleteBtn(){
-	console.log("delete");
-}
 
-function presentTable(bogus_Json)
-{
-   bogus_Json = [{"userID": 2, "phone": "407555555", "email": "cole@gmail.com", "lastname": "Sil", "firstname": "Cole"}, {"userID": 2, "phone": "5553456789", "email": "jimmy@dublin.com", "lastname": "Joyce", "firstname": "James"}, {"userID": 1, "phone": "5553456789", "email": "ScottyBoy@gmail.com", "lastname": "Fitzgerald", "firstname": "Scott"}, {"userID": 1, "phone": "5553425678", "email": "peoplesElbow@gmail.com", "lastname": "Rock", "firstname": "The"}];
+    //count = 0; console.log("FIRE AWAY");
+   /* $('.btn-danger').click(function() {
+        var row = $(this).closest("tr");
+        var td = row.find("td");
+        $.each(td, function() {
+        console.log($(this).text());
+    });
+    }) */
     
+    
+	/*$('#rowBtn').click(function(){
+        var row = $(this).closest("tr");
+        var td = row.find("td");
+        $.each(td, function() {
+        console.log($(this).text());
+    });
+    $(this).parents('tr').remove();
+}) */
+
+
+
+function presentTable()
+{
+    hideOrShow("queryForm", true);
+    bogus_Json = [{"userid": 2, "phone": "407555555", "email": "cole@gmail.com", "lastname": "Sil", "firstname": "Cole"}, {"currentuserid": 2, "phone": "5553456789", "email": "jimmy@dublin.com", "lastname": "Joyce", "firstname": "James"}, {"currentuserid": 1, "phone": "5553456789", "email": "ScottyBoy@gmail.com", "lastname": "Fitzgerald", "firstname": "Scott"}, {"currentuserid": 1, "phone": "5553425678", "email": "peoplesElbow@gmail.com", "lastname": "Rock", "firstname": "The"}];
     
     var count = Object.keys(bogus_Json).length;
     console.log("Size of json objects " + count);
@@ -135,6 +189,7 @@ function presentTable(bogus_Json)
         txt += "<td>" + bogus_Json[i].lastname + "</td>";
         txt += "<td>" + bogus_Json[i].email + "</td>";
         txt += "<td>" + bogus_Json[i].phone + "</td>";
+        txt += "<td>" + "<button id='rowBtn' style='margin-left:2%;' type='button' class='btn btn-danger'>Delete</button>" + "</td>";
         /*for (i = 0; i < count; i++) {
             	txt += "<td>" + bogus_Json[i]+ "</td>";
                 
