@@ -1,35 +1,36 @@
-var url = window.location.href; //"http://18.219.16.244";
+var url = window.location.href;
 var ext = ".py"
-var userid;
+var user;
 
-function login() {
-    var userName = document.getElementById("userNameText").value;
-    var password = document.getElementById("passwordText").value;
-
-    if (userName === "" || password === "") {
+function login(username, password) {
+    
+    if (username === "" || password === "") {
         hideOrShow("warningBox", true);
         return;
     }
+		
+    console.log(username + "\n" + password);   
+       
+    var jsonPayload = '{"username" : "' + username + '", "password" : "' + hashPassword(password) + '"}';   
     
-    // Send json to backend API.
-    var jsonPayload = '{"username" : "' + userName + '", "password" : "' + hashPassword(password) + '"}';   
-    
+	// Configure AJAX.
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", url + "API/login" + ext, false);
+    xhr.open("POST", "API/login" + ext, false);
     xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
 
+	// Send json payload and update page.
 	try {
         xhr.send(jsonPayload);
         var jsonReceive = JSON.parse( xhr.responseText );
+        console.log(jsonReceive);
        
         // Error checking.
         if ( jsonReceive.hasOwnProperty('error') ) {
             hideOrShow("warningBox", true);
             return;
         }
-        
-        userid = jsonReceive[0];
-        console.log(userid)
+        user = jsonReceive[0];
+		
         hideOrShow("loginForm", false);
         presentTable(jsonReceive);
     }
@@ -61,7 +62,6 @@ function hideOrShow(elementId, showState) {
         vis = "hidden";
         dis = "none";
     }
-    console.log("gabba" + vis + dis);
     document.getElementById(elementId).style.visibility = vis;
     document.getElementById(elementId).style.display = dis;
 }
@@ -72,8 +72,8 @@ function addBtn(){
     var email = document.getElementById("emailBox").value;
     var phone = document.getElementById("phoneBox").value;
         
-    var jsonPayload = '{"userid" :'+ userid +', "firstname" : "' + firstname + '", "lastname" : "' + lastname + '", "email" : "' + email + '", "phone" : "' + phone + '"}';
-    
+    var jsonPayload = '{"userid" : '+ user[3] +', "firstname" : "' + firstname + '", "lastname" : "' + lastname + '", "email" : "' + email + '", "phone" : "' + phone + '"}';
+    console.log(jsonPayload);
     var xhr = new XMLHttpRequest();
     xhr.open("POST", url + "API/add" + ext, false);
     xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
@@ -81,7 +81,7 @@ function addBtn(){
 	try {
         xhr.send(jsonPayload);
         var jsonReceive = JSON.parse( xhr.responseText );
-       
+        console.log(jsonReceive);
         // Error checking.
         if ( jsonReceive.hasOwnProperty('error') ) {
             hideOrShow("warningBox", true);
@@ -96,16 +96,10 @@ function addBtn(){
     }
 }
 
-function searchBtn(){
-	console.log("search"); 
-}
-
-function presentTable(jsonObject)
-{
+function presentTable(jsonObject) {
     hideOrShow("queryForm", true);
     
     var count = Object.keys(jsonObject).length;
-    console.log("Size of json objects " + count);
     
     var txt ="";
     txt += "<table class='table table-striped' id='myTable'>";
@@ -118,9 +112,7 @@ function presentTable(jsonObject)
     txt += "</thead>";
     txt += "</tr>";
     //txt += "</table>";
-    
-    console.log(jsonObject);
-    
+        
     for (i = 1; i < count; i++){ 
         txt += "<tr>";
         txt += "<td>" + jsonObject[i].firstname + "</td>";
@@ -137,7 +129,5 @@ function presentTable(jsonObject)
     txt += "</table>"
     
     
-    document.getElementById("view").innerHTML = txt;
-    console.log("end of presentTable");
-    
+    document.getElementById("view").innerHTML = txt;    
 }

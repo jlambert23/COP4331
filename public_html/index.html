@@ -47,7 +47,7 @@
                 <div id="passBox"> password:
                     <input id="passwordText" type="password" placeholder="password" /> </div>
                 <br/>
-                <button type="button" class="btn btn-outline-primary" onclick="login();">Login</button>
+                <button type="button" class="btn btn-outline-primary" onclick="login(userNameText.value, passwordText.value);">Login</button>
                 <a href="signup.html"> <button type="button" class="btn btn-outline-success" style="margin-left:5%;">Sign up</button> </a>
 
             </div>
@@ -170,7 +170,7 @@ function tablesearch() {
 
         console.log("Print array: " + prepJson);
 
-     var jsonPayload = '{"userid" :'+ userid +', "firstname" : "' + prepJson[0] + '", "lastname" : "' + prepJson[1] + '", "email" : "' + prepJson[2] + '", "phone" : "' + prepJson[3] + '"}';
+     var jsonPayload = '{"userid" :'+ user[3] +', "firstname" : "' + prepJson[0] + '", "lastname" : "' + prepJson[1] + '", "email" : "' + prepJson[2] + '", "phone" : "' + prepJson[3] + '"}';
     console.log(jsonPayload);
     //console.log(userid);
 		//console.log(typeof userid);

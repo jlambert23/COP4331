@@ -55,7 +55,7 @@
                     <input id="lastNameBox" type="text" placeholder="Last Name" />
                 </div>
                 <br />
-                <div id="signUpEmail"> Email:
+                <div id="signUpEmailContainer"> Email:
                     <input id="signUpEmail" type="email" placeholder="Your email" style="margin-left: 4%;" />
                 </div>
                 <br />
@@ -82,9 +82,62 @@
         </form>
     </div>
 </body>
+<script type= "text/javascript" src="js/script.js"></script>
 <script type="text/javascript">
+
     $(document).on('click', '#submitButton', function(){
-        console.log("load submit");
+        var conf = window.confirm("Are these credentials correct?");
+        
+        if (conf){
+            var ret = signup();
+            
+            if (ret == true) {
+                alert("New account created. Please login.");
+                window.location.href="index.html";
+            } else {
+                alert("Incorrect login information. Please verify.");
+            }
+            
+        } else {
+            return;
+        }
+        
     })
+    
+    function signup(){
+        var username = document.getElementById("userNameText").value;
+        var password = document.getElementById("passwordText").value;
+        var firstname = document.getElementById("firstNameBox").value;
+        var lastname = document.getElementById("lastNameBox").value;
+        var email = document.getElementById("signUpEmail").value;
+                
+        var jsonPayload = '{"username" : "' + username + '", "password" : "' + hashPassword(password) + '", ' +
+			'"firstname" : "' + firstname + '", "lastname" : "' + lastname + '", "email" : "' + email + '"}';
+		
+		// Configure AJAX.
+		var xhr = new XMLHttpRequest();
+		xhr.open("POST", "API/newuser" + ext, false);
+		xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+		// Send json payload and update page.
+		try {
+			xhr.send(jsonPayload);
+			var jsonReceive = JSON.parse( xhr.responseText );
+		   
+			// Error checking.
+			if ( jsonReceive.hasOwnProperty('error') ) {
+				// MessageBox?
+				console.log(jsonReceive);
+			}
+			user = jsonReceive[0];
+		}
+		catch(err) {
+			// MessageBox?
+			console.log(err);
+            return false;
+		}
+        
+        return true;
+    }
 </script>
 </html>

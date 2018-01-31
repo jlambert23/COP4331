@@ -31,6 +31,9 @@ phone VARCHAR(30),
 email VARCHAR(30),
 userid INT);
 
+CREATE UNIQUE INDEX qid ON contact(firstname, lastname, phone, email, userid);
+
+
 # Modify userid to have foreign key.
 ALTER TABLE contact
 ADD CONSTRAINT FK_contact
